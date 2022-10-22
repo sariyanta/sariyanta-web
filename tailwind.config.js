@@ -1,4 +1,5 @@
 /** @type {import('tailwindcss').Config} */
+const {fontFamily} = require('tailwindcss/defaultTheme')
 module.exports = {
   mode:'jit',
   content: [
@@ -9,7 +10,7 @@ module.exports = {
   theme: {
     extend: {
       fontFamily:{
-        'worksans' : ['Work Sans', 'sans-serif']
+        'sans' : ['IBM Plex Sans', ...fontFamily.sans]
       }
     },
   },
