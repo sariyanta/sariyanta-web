@@ -11,7 +11,7 @@ import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter';
 import React from "react";
 
 /**
- * 
+ *
  * @param {object} post
  * @returns string
  */
@@ -25,11 +25,11 @@ export function BlogLayout({ post }) {
 }
 
 /**
- * 
+ *
  * @param {string} title Title of the blog post
  * @param {string} date Published date
- * @param {object} author Object consisting of author name, github username, and avatar 
- * @returns 
+ * @param {object} author Object consisting of author name, github username, and avatar
+ * @returns
  */
 export function BlogHeader({ title, date, author }) {
   return (
@@ -42,9 +42,9 @@ export function BlogHeader({ title, date, author }) {
 }
 
 /**
- * 
+ *
  * @param {string} title  Post title
- * @returns 
+ * @returns
  */
 export function BlogTitle({ title }) {
   return (
@@ -53,9 +53,9 @@ export function BlogTitle({ title }) {
 }
 
 /**
- * 
- * @param {string} date Published date 
- * @returns 
+ *
+ * @param {string} date Published date
+ * @returns
  */
 export function BlogPublishedDate({ date }) {
   let postDate = new Date(date);
@@ -68,9 +68,9 @@ export function BlogPublishedDate({ date }) {
 }
 
 /**
- * 
+ *
  * @param {object} author Object consisting the author name, github username and avatar
- * @returns 
+ * @returns
  */
 export function BlogAuthor({ author }) {
   return (
@@ -97,15 +97,32 @@ export function BlogContent({ markdown }) {
   return (
     <article className="prose w-full mx-auto auto-cols-max py-10 ">
       <ReactMarkdown
+        // eslint-disable-next-line
         children={markdown}
         components={{
           h2: ({ node, children, ...props }) => <h2 className="text-4xl" {...props}>{children}</h2>,
-          code: ({ node, children, ...props }) => <SyntaxHighlighter {...props}>{children}</SyntaxHighlighter>
-
+          code: CodeBlock
         }}
       />
       <BackToBlog />
     </article>
+  )
+}
+
+export function CodeBlock({node, inline, children, className, ...props}) {
+  const match = /language-(\w+)/.exec(className || '')
+  return !inline && match ? (
+    <SyntaxHighlighter
+      // eslint-disable-next-line
+      children={String(children).replace(/\n$/, '')}
+      language={match[1]}
+      PreTag="div"
+      {...props}
+    />
+  ) : (
+    <code className={className} {...props}>
+      {children}
+    </code>
   )
 }
 
