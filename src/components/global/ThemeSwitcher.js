@@ -1,7 +1,7 @@
-import switchTheme from "../../lib/switchTheme"
+import useDarkMode from "../../lib/switchTheme"
 import { BrightnessHigh, Moon } from "react-bootstrap-icons";
 export default function ThemeSwitcher(){
-  const [colorTheme, setTheme] = switchTheme();
+  const [colorTheme, setTheme] = useDarkMode();
   return (
     <>
       {colorTheme === "light" ? (
