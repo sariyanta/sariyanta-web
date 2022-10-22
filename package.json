@@ -10,7 +10,9 @@
     "pretty": "prettier --write \"./**/*.{js,jsx,json}\""
   },
   "dependencies": {
+    "@nextui-org/react": "^1.0.0-beta.10",
     "bootstrap-icons": "^1.9.1",
+    "gray-matter": "^4.0.3",
     "image-size": "^1.0.2",
     "moment": "^2.29.4",
     "next": "12.3.1",
@@ -21,7 +23,7 @@
     "react-syntax-highlighter": "^15.5.0",
     "remark": "^14.0.2",
     "remark-html": "^15.0.1",
-    "gray-matter": "^4.0.3"
+    "sharp": "^0.31.1"
   },
   "devDependencies": {
     "autoprefixer": "^10.4.12",

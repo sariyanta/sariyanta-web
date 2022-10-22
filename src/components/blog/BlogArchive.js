@@ -2,11 +2,18 @@ import Link from "next/link";
 import Image from "next/future/image";
 import { BlogPublishedDate } from "./BlogSingle";
 export function BlogArchive({posts}) {
+  const publishedPosts = [];
+  posts.map((post) => {
+    if (post.status === "published") {
+      publishedPosts.push(post);
+    }
+  })
   return (
     <div className="max-w-4xl mx-auto">
       <BlogArchiveHeader />
       <BlogArchiveGridWrapper>
-        {posts.map((post) => (
+        {publishedPosts.map((post) => (
+
           <BlogArchiveGridItem post={post} key={post.id} />
         ))}
       </BlogArchiveGridWrapper>

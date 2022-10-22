@@ -5,7 +5,7 @@ export default class MyDocument extends Document {
     return (
       <Html lang="en">
         <Head>
-          {/* PWA primary color */}
+
           <link rel="shortcut icon" href="/favicon.ico" />
           <link
             rel="apple-touch-icon"
@@ -30,7 +30,7 @@ export default class MyDocument extends Document {
             href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap"
           />
         </Head>
-        <body>
+        <body className="bg-gray-100 text-black dark:bg-black dark:text-white">
           <Main />
           <NextScript />
         </body>

@@ -13,9 +13,7 @@ export default function Blog({ allPostsData }) {
       <Head>
         <title>{heading}</title>
       </Head>
-      <main>
-        <BlogArchive />
-      </main>
+      <BlogArchive posts={allPostsData} />
     </>
 
   )

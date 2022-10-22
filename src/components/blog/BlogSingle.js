@@ -48,7 +48,7 @@ export function BlogHeader({ title, date, author }) {
  */
 export function BlogTitle({ title }) {
   return (
-    <h1 className="text-4xl">{title}</h1>
+    <h1 className="text-4xl font-bold">{title}</h1>
   )
 }
 
@@ -57,13 +57,13 @@ export function BlogTitle({ title }) {
  * @param {string} date Published date
  * @returns
  */
-export function BlogPublishedDate({ date }) {
+export function BlogPublishedDate({ date, ...props }) {
   let postDate = new Date(date);
   let relativeTime = moment(postDate).fromNow()
   postDate = moment(postDate).format('dddd, D MMMM YYYY')
 
   return (
-    <time>{postDate} ({relativeTime})</time>
+    <time {...props}>{postDate} ({relativeTime})</time>
   )
 }
 
