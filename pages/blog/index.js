@@ -1,11 +1,8 @@
 import Head from 'next/head'
 import { getSortedPostsData } from '../../src/lib/blog'
-import Link from 'next/link'
-import BlogHero from '../../src/components/blog/BlogHero'
-import BlogContainer from '../../src/components/blog/BlogContainer'
-import BlogItem from '../../src/components/blog/BlogItem'
+import { BlogArchive } from '../../src/components/blog/BlogArchive'
 
-const {heading, subheading} = {
+const { heading, subheading } = {
   heading: "Blog",
   subheading: "Learning by doing"
 }
@@ -17,12 +14,7 @@ export default function Blog({ allPostsData }) {
         <title>{heading}</title>
       </Head>
       <main>
-        <BlogHero heading={heading} subheading={subheading} />
-        <BlogContainer>
-            {allPostsData.map((post ) => (
-              <BlogItem key={post.id} post={post} />
-            ))}
-        </BlogContainer>
+        <BlogArchive />
       </main>
     </>
 
