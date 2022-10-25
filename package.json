@@ -10,10 +10,14 @@
     "pretty": "prettier --write \"./**/*.{js,jsx,json}\""
   },
   "dependencies": {
+    "@chakra-ui/react": "^2.3.6",
+    "@emotion/react": "^11.10.4",
+    "@emotion/styled": "^11.10.4",
     "@nextui-org/react": "^1.0.0-beta.10",
     "bootstrap-icons": "^1.9.1",
     "firebase": "^9.12.1",
     "firebase-admin": "^11.2.0",
+    "framer-motion": "^7.6.1",
     "gray-matter": "^4.0.3",
     "image-size": "^1.0.2",
     "moment": "^2.29.4",
