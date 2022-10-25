@@ -19,7 +19,7 @@ const slugify = require("slugify");
  */
 export function BlogLayout({ post }) {
   return (
-    <main className="max-w-4xl w-full mx-auto px-6 lg:px-0">
+    <main className="mx-auto w-full max-w-4xl px-6 lg:px-0">
       <BlogHeader title={post.title} date={post.date} author={post.author} />
       <BlogContent markdown={post.markdown} />
     </main>
@@ -35,7 +35,7 @@ export function BlogLayout({ post }) {
  */
 export function BlogHeader({ title, date, author }) {
   return (
-    <div className="mx-auto w-full py-10 text-center border-b">
+    <div className="mx-auto w-full border-b py-10 text-center">
       <BlogTitle title={title} />
       <BlogPublishedDate date={date} />
       <BlogAuthor author={author} />
@@ -49,7 +49,7 @@ export function BlogHeader({ title, date, author }) {
  * @returns
  */
 export function BlogTitle({ title }) {
-  return <h1 className="text-2xl lg:text-5xl font-bold mb-6">{title}</h1>;
+  return <h1 className="mb-6 text-2xl font-bold lg:text-5xl">{title}</h1>;
 }
 
 /**
@@ -77,10 +77,10 @@ export function BlogPublishedDate({ date, ...props }) {
 export function BlogAuthor({ author }) {
   return (
     <div className="flex items-center justify-center">
-      <div className="flex-none mr-2">
+      <div className="mr-2 flex-none">
         {author?.avatar ? (
           <Image
-            className="rounded-full inline-block"
+            className="inline-block rounded-full"
             src={author.avatar}
             width={40}
             height={40}
@@ -88,7 +88,7 @@ export function BlogAuthor({ author }) {
           />
         ) : null}
       </div>
-      <div className="flex-initial flex flex-col text-left">
+      <div className="flex flex-initial flex-col text-left">
         <span className="leading-none">{author.name}</span>
         <Link href={`https://github.com/${author.github}`}>
           <a className="flex items-center  text-indigo-700">
@@ -103,18 +103,18 @@ export function BlogAuthor({ author }) {
 
 export function BlogContent({ markdown }) {
   return (
-    <article className="prose w-full mx-auto auto-cols-max py-10 ">
+    <article className="prose mx-auto w-full auto-cols-max py-10 ">
       <ReactMarkdown
         // eslint-disable-next-line
         children={markdown}
         components={{
           h2: ({ node, children, ...props }) => (
-            <h2 className="text-3xl mb-4 font-semibold" {...props}>
+            <h2 className="mb-4 text-3xl font-semibold" {...props}>
               {children}
             </h2>
           ),
           h3: ({ node, children, ...props }) => (
-            <h3 className="text-2xl mb-4 font-semibold" {...props}>
+            <h3 className="mb-4 text-2xl font-semibold" {...props}>
               {children}
             </h3>
           ),
@@ -133,7 +133,7 @@ export function BlogContent({ markdown }) {
             </a>
           ),
           ol: ({ node, children }) => (
-            <ol className="list-decimal ml-6 mb-4">{children}</ol>
+            <ol className="ml-6 mb-4 list-decimal">{children}</ol>
           ),
           pre: ({ node, children, ...props }) => (
             <pre className="mb-6" {...props}>
@@ -142,7 +142,7 @@ export function BlogContent({ markdown }) {
           ),
           code: CodeBlock,
           img: ({ node, children, ...props }) => (
-            <img className="w-full h-auto" {...props}>
+            <img className="h-auto w-full" {...props}>
               {children}
             </img>
           ),
@@ -176,7 +176,7 @@ export function CodeBlock({ node, inline, children, className, ...props }) {
 export function BackToBlog() {
   return (
     <Link href="/blog">
-      <a className="inline-flex items-center py-3 px-6 mt-10 bg-black text-white drop-shadow-sm border border-transparent hover:drop-shadow-2xl hover:border-black hover:border hover:bg-white hover:text-black transition-colors">
+      <a className="mt-10 inline-flex items-center border border-transparent bg-black py-3 px-6 text-white drop-shadow-sm transition-colors hover:border hover:border-black hover:bg-white hover:text-black hover:drop-shadow-2xl">
         <ArrowLeft className="mr-4" />
         Back to Blog
       </a>

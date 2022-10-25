@@ -10,7 +10,9 @@ author:
 meta:
   title: "How to create Dark and Light mode switch in NextJS with Tailwindcss - Sariyanta"
   description: "Learn how to create dark and light mode switch in NextJS with Tailwindcss"
-featuredimage: "/images/content/blog/nextjs.png"
+featuredimage:
+  url: "/images/content/blog/nextjs.png"
+  alt: "Next JS"
 status: "published"
 stack: ["nextjs", "tailwindcss"]
 ---
