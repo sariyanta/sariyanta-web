@@ -1,6 +1,10 @@
 import Head from "next/head";
+import { useAuth } from "../src/lib/auth";
 
 export default function Home() {
+	const auth = useAuth();
+	const { user } = auth;
+	console.log(auth);
 	return (
 		<>
 			<Head>
@@ -13,7 +17,11 @@ export default function Home() {
 
 			<main className="flex flex-col max-w-4xl mx-auto">
 				<h1>Hello</h1>
-				<button type="button" role="button" className="inline-block bg-gradient-to-r self-center px-4 py-2 from-black to-red-400 text-white">Sign in</button>
+				{auth?.user ? (
+					<button onClick={(e) => auth.logout()}>Sign out {user?.email}</button>
+				) : (
+					<button onClick={(e) => auth.signInWithGithub()}>Sign in</button>
+				)}
 			</main>
 		</>
 	);
