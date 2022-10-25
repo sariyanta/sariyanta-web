@@ -1,11 +1,14 @@
 import fs from "fs";
 import path from "path";
 import matter from "gray-matter";
-import { remark } from "remark";
-import html from "remark-html";
 
 const postsDirectory = path.join(process.cwd(), "content/blog");
 
+/**
+ *
+ * @returns object Sorted post data
+ *
+ */
 export function getSortedPostsData() {
   // Get file names under /posts
   const fileNames = fs.readdirSync(postsDirectory);
@@ -26,6 +29,7 @@ export function getSortedPostsData() {
       ...matterResult.data,
     };
   });
+
   // Sort posts by date
   return allPostsData.sort((a, b) => {
     if (a.date < b.date) {
@@ -36,6 +40,11 @@ export function getSortedPostsData() {
   });
 }
 
+/**
+ * Return array with .md file names.
+ *
+ * @returns array
+ */
 export function getAllPostIds() {
   const fileNames = fs.readdirSync(postsDirectory);
   return fileNames.map((fileName) => {
@@ -47,6 +56,12 @@ export function getAllPostIds() {
   });
 }
 
+/**
+ * Get the markdown content based on the route.
+ *
+ * @param {string} id File name with is the route.
+ * @returns markdown content
+ */
 export async function getPostData(id) {
   const fullPath = path.join(postsDirectory, `${id}.md`);
   const fileContents = fs.readFileSync(fullPath, "utf8");
@@ -54,7 +69,6 @@ export async function getPostData(id) {
   // Use gray-matter to parse the post metadata section
   const matterResult = matter(fileContents);
   const markdown = matterResult.content;
-  // Use remark to convert markdown into HTML string
 
   // Combine the data with the id and contentHtml
   return {
