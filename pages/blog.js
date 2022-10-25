@@ -1,5 +1,5 @@
 import Head from "next/head";
-import { getSortedPostsData } from "@/lib/getBlogContents";
+import { getSortedPostsData } from "@/utils/getBlogContents";
 
 
 export default function Blog({ allPostsData }) {
