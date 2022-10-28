@@ -8,12 +8,10 @@ export default function Navigation() {
 		<Flex
 			as="header"
 			w={"100%"}
-			position={"fixed"}
 			borderBottom="1px"
 			borderColor="gray.100"
 			zIndex={1024}
 			backgroundColor="white"
-			top={0}
 		>
 			<Flex
 				maxWidth="60rem"

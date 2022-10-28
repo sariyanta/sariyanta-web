@@ -1,55 +1,86 @@
-import { createContext, useContext, useEffect, useState } from "react";
-import { GithubAuthProvider, signInWithPopup, signOut, getAuth } from "firebase/auth";
-
-import firebaseApp from "./firebase";
-const app = firebaseApp();
-
+import { useState, useEffect, useContext, createContext } from "react";
+import {
+	getAuth,
+	createUserWithEmailAndPassword,
+	GithubAuthProvider,
+	signInWithPopup,
+} from "firebase/auth";
+import { createFirebaseApp } from "@/lib/firebase";
+import { createUser } from "./db";
+const app = createFirebaseApp();
 const authContext = createContext();
 
-export function AuthProvider({ children }) {
-	const auth = useContextProviderAuth();
+export const useAuth = () => {
+	return useContext(authContext);
+};
 
+export const AuthProvider = ({ children }) => {
+	const auth = useAuthProvider();
 	return <authContext.Provider value={auth}>{children}</authContext.Provider>;
-}
+};
 
-export const useAuth = () => useContext(authContext);
-
-function useContextProviderAuth() {
+function useAuthProvider() {
 	const [user, setUser] = useState(null);
-	const auth = getAuth(app);
-	const github = new GithubAuthProvider();
-	function handleUser(rawUser) {
-		if (rawUser) {
-			const user = formatUser(rawUser);
 
+	const firebaseauth = getAuth(app);
+
+	const handleUser = async (data) => {
+		if (data) {
+			const user = await formatUserData(data);
+			createUser(user.uid, user);
 			setUser(user);
-			return user;
 		} else {
 			setUser(false);
-			return false;
 		}
-	}
-
-	const signInWithGithub = () => {
-		signInWithPopup(auth, github).then((result) => {
-			handleUser(result.user);
-		});
+	};
+	// Setup create user with Email and password
+	const signupWithEmailAndPassword = (email, password) => {
+		createUserWithEmailAndPassword(firebaseauth, email, password)
+			.then((userCredential) => {
+				// Signed in
+				const user = userCredential.user;
+				handleUser(user);
+				return user;
+			})
+			.catch((error) => {
+				const errorCode = error.code;
+				const errorMessage = error.message;
+				handleUser(false);
+				return false;
+			});
 	};
 
-	const logout = () => {
-		signOut(auth).then((result) => {
-			handleUser(false);
-		});
+	const signinWithGithub = () => {
+		const github = new GithubAuthProvider();
+
+		signInWithPopup(firebaseauth, github)
+			.then((result) => {
+				const credential = GithubAuthProvider.credentialFromResult(result);
+				const token = credential.accessToken;
+
+				const user = result.user;
+				handleUser(user);
+			})
+			.catch((error) => {
+				// Handle Errors here.
+				const errorCode = error.code;
+				const errorMessage = error.message;
+				// The email of the user's account used.
+				const email = error.customData.email;
+				// The AuthCredential type that was used.
+				const credential = GithubAuthProvider.credentialFromError(error);
+
+				handleUser(false);
+			});
 	};
-	return { user, signInWithGithub, logout };
+
+	return { user, signupWithEmailAndPassword, signinWithGithub };
 }
 
-const formatUser = (user) => {
+const formatUserData = async (data) => {
 	return {
-		uid: user.uid,
-		email: user.email,
-		name: user.displayName,
-		provider: user.providerData[0].providerId,
-		photoUrl: user.photoURL,
+		uid: data.uid,
+		email: data.email,
+		photoURL: data.photoURL,
 	};
 };
